@@ -26,7 +26,8 @@ def commit(number_of_commits, day, month):
     repo = gitapi.Repo("../gitCommitGridDrawing")
     # print repo.git_status()['??']
     # print repo.git_status()['AM']
-
+    for filename in repo.git_status()['M']:
+        repo.git_add(filename)
     # Do the commit action
     for i in range(number_of_commits):
         edit_file = open(edit_file_name, 'a')
@@ -39,6 +40,14 @@ def commit(number_of_commits, day, month):
 
     # print the log for verification of the commits made.
     print repo.git_log()
+
+
+def explore_repo():
+    repo = gitapi.Repo("../gitCommitGridDrawing")
+    print repo.git_status()['M']#['??']
+    for x in repo.git_status()['M']:
+        print x
+    # print repo.git_status()['AM']
 
 
 def run():
@@ -74,5 +83,10 @@ def run():
 def run2():
     # print urllib2.urlopen("http://stackoverflow.com/questions/29723419/python-anywhere-issue-using-urllib2-with-virtualenv").read()
     print get_daily_quotation(0)
+
+
+def run3():
+    explore_repo()
+
 
 run()
