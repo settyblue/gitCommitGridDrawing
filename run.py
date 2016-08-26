@@ -17,8 +17,8 @@ quote_url = 'http://www.dailyinspirationalquotes.in/'
 def get_daily_quotation(quote_number):
     page = urllib2.urlopen(quote_url)
     soup = BeautifulSoup(page.read())
-    #soup.c
-    print soup.findAll("div",{"class":"td-excerpt"})[quote_number].contents[0]
+    BeautifulSoup("&#039;",convertEntities=BeautifulSoup.HTML_ENTITIES)
+    print str(soup.findAll("div",{"class":"td-excerpt"})[quote_number].contents[0])
     return str(soup.findAll("div",{"class":"td-excerpt"})[quote_number].contents[0])
 
 
@@ -26,8 +26,9 @@ def commit(number_of_commits, day, month):
     repo = gitapi.Repo("../gitCommitGridDrawing")
     # print repo.git_status()['??']
     # print repo.git_status()['AM']
-    for filename in repo.git_status()['M']:
-        repo.git_add(filename)
+    if repo.git_status().has_key('M'):
+        for filename in repo.git_status()['M']:
+            repo.git_add(filename)
     # Do the commit action
     for i in range(number_of_commits):
         edit_file = open(edit_file_name, 'a')
@@ -88,5 +89,8 @@ def run2():
 def run3():
     explore_repo()
 
+
+def run4():
+    get_daily_quotation(1)
 
 run()
