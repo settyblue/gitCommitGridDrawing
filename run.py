@@ -17,9 +17,8 @@ quote_url = 'http://www.dailyinspirationalquotes.in/'
 def get_daily_quotation(quote_number):
     page = urllib2.urlopen(quote_url)
     soup = BeautifulSoup(page.read())
-    BeautifulSoup("&#039;",convertEntities=BeautifulSoup.HTML_ENTITIES)
-    print str(soup.findAll("div",{"class":"td-excerpt"})[quote_number].contents[0])
-    return str(soup.findAll("div",{"class":"td-excerpt"})[quote_number].contents[0])
+    print str(soup.findAll("div",{"class":"td-excerpt"})[quote_number].contents[0]).replace('&#039;', '\'')
+    return str(soup.findAll("div",{"class":"td-excerpt"})[quote_number].contents[0]).replace('&#039;', '\'')
 
 
 def commit(number_of_commits, day, month):
@@ -91,6 +90,6 @@ def run3():
 
 
 def run4():
-    get_daily_quotation(1)
+    get_daily_quotation(0)
 
-run()
+run4()
