@@ -92,4 +92,4 @@ def run3():
 def run4():
     get_daily_quotation(0)
 
-run4()
+run()
