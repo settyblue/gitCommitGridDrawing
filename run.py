@@ -41,6 +41,25 @@ def commit(number_of_commits, day, month):
     # print the log for verification of the commits made.
     print repo.git_log()
 
+def override_commit(number_of_commits, day, month):
+    repo = gitapi.Repo("../gitCommitGridDrawing")
+    # print repo.git_status()['??']
+    # print repo.git_status()['AM']
+    if repo.git_status().has_key('M'):
+        for filename in repo.git_status()['M']:
+            repo.git_add(filename)
+    # Do the commit action
+    for i in range(number_of_commits):
+        edit_file = open(edit_file_name, 'a')
+        quote_text = get_daily_quotation(i)
+        edit_file.write(quote_text)
+        edit_file.write("\n\t\t Quote on "+str(day)+"/"+str(month)+"/"+commit_year+"\n\n\n")
+        edit_file.close()
+        repo.git_add(edit_file_name)
+        repo.git_commit(message="Modified dummy edit file.")
+
+    # print the log for verification of the commits made.
+    print repo.git_log()
 
 def explore_repo():
     repo = gitapi.Repo("../gitCommitGridDrawing")
@@ -90,6 +109,6 @@ def run3():
 
 
 def run4():
-    get_daily_quotation(0)
+    override_commit(1,2,9)
 
-run()
+run4()
