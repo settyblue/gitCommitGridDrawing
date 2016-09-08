@@ -59,7 +59,7 @@ def override_commit(number_of_commits, day, month):
         repo.git_commit(message="Modified dummy edit file.")
 
     # print the log for verification of the commits made.
-    print repo.git_log()
+    # print repo.git_log()
 
 def explore_repo():
     repo = gitapi.Repo("../gitCommitGridDrawing")
