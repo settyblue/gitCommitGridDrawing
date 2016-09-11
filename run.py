@@ -110,4 +110,4 @@ def run4():
     override_commit(1,10,9,2)
 
 
-run4()
+run()
