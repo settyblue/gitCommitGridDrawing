@@ -111,7 +111,7 @@ def run4():
     override_commit(1,10,9,2)
 
 
-def commit_with_amend(colour_code, date, month,day,start_quote_num=0):
+def commit_with_amend(date, month,day,colour_code,start_quote_num=0):
     repo = gitapi.Repo("../gitCommitGridDrawing")
     number_of_commits = commit_colour_code[colour_code]
     if repo.git_status().has_key('M'):
@@ -129,12 +129,12 @@ def commit_with_amend(colour_code, date, month,day,start_quote_num=0):
 
 
 
-def old_date_commit(date, month, day, colour_code):
-    commit_with_amend(colour_code, date, month, day)
+def old_date_commit(date, month, day, colour_code, start_quote_num):
+    commit_with_amend( date, month, day, colour_code, start_quote_num)
 
 
 def run5():
-    old_date_commit(13, 'Sep', 'Mon', 1)
+    old_date_commit(13, 'Sep', 'Mon', 1, 1)
 
 
 def run6():
