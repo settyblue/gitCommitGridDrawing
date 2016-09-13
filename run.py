@@ -1,6 +1,7 @@
 # helloWorld
 
 import datetime
+from subprocess import call
 import os
 import gitapi
 import urllib2
@@ -54,7 +55,7 @@ def override_commit(number_of_commits, day, month, start_quote_num):
         edit_file.write("\n\t\t Quote on "+str(day)+"/"+str(month)+"/"+commit_year+"\n\n\n")
         edit_file.close()
         repo.git_add(edit_file_name)
-        repo.git_commit(message="Modified edit file.")
+        repo.git_commit(message="Modified file.")
 
     # print the log for verification of the commits made.
     # print repo.git_log()
@@ -110,4 +111,34 @@ def run4():
     override_commit(1,10,9,2)
 
 
-run()
+def commit_with_amend(colour_code, date, month,day,start_quote_num=0):
+    repo = gitapi.Repo("../gitCommitGridDrawing")
+    number_of_commits = commit_colour_code[colour_code]
+    if repo.git_status().has_key('M'):
+        for filename in repo.git_status()['M']:
+            repo.git_add(filename)
+    for i in range(start_quote_num,number_of_commits+start_quote_num):
+        edit_file = open(edit_file_name, 'a')
+        quote_text = get_daily_quotation(i)
+        edit_file.write(quote_text)
+        edit_file.write("\n\t\t Quote on "+str(date)+"/"+str(month)+"/"+commit_year+"\n\n\n")
+        edit_file.close()
+        repo.git_add(edit_file_name)
+        repo.git_commit(message="Modified file.")
+        #strarg = "commit --amend --date=\""+day+" "+month+" "+str(date)+" 19:0"+str(i)+" 2016 +0010\" "
+
+
+
+def old_date_commit(date, month, day, colour_code):
+    commit_with_amend(colour_code, date, month, day)
+
+
+def run5():
+    old_date_commit(13, 'Sep', 'Mon', 1)
+
+
+def run6():
+    #call("ls ", shell=True)
+    os.system("/usr/bin/bash --login -i")
+
+run5()
