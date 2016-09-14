@@ -128,17 +128,12 @@ def commit_with_amend(date, month,day,colour_code,start_quote_num=0):
         #strarg = "commit --amend --date=\""+day+" "+month+" "+str(date)+" 19:0"+str(i)+" 2016 +0010\" "
 
 
-
 def old_date_commit(date, month, day, colour_code, start_quote_num):
     commit_with_amend( date, month, day, colour_code, start_quote_num)
 
 
 def run5():
-    old_date_commit(13, 'Sep', 'Mon', 1, 2)
+    old_date_commit(14, 'Sep', 'Wed', 1, 0)
 
-
-def run6():
-    #call("ls ", shell=True)
-    os.system("/usr/bin/bash --login -i")
 
 run5()
