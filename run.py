@@ -133,7 +133,7 @@ def old_date_commit(date, month, day, colour_code, start_quote_num):
 
 
 def run5():
-    old_date_commit(15, 'Sep', 'Thu', 1, 3)
+    old_date_commit(16, 'Sep', 'Fri', 1, 4)
 
 
 run5()
