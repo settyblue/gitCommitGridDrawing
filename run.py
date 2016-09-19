@@ -136,4 +136,4 @@ def run5():
     old_date_commit(17, 'Sep', 'Sat', 1, 5)
 
 
-run5()
+run()
