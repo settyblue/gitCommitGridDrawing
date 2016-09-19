@@ -13,7 +13,7 @@ pointer_line = 0
 commit_colour_code = {0: 0, 1: 1, 2: 3, 3: 5, 4: 7}
 commit_year = '2016'
 quote_url = 'http://www.dailyinspirationalquotes.in/'
-
+quote_url2 = 'https://www.goodreads.com/quotes'
 
 def get_daily_quotation(quote_number):
     page = urllib2.urlopen(quote_url)
@@ -21,6 +21,12 @@ def get_daily_quotation(quote_number):
     print str(soup.findAll("div",{"class":"td-excerpt"})[quote_number].contents[0]).replace('&#039;', '\'')
     return str(soup.findAll("div",{"class":"td-excerpt"})[quote_number].contents[0]).replace('&#039;', '\'')
 
+def get_daily_quotation2(quote_number):
+    page = urllib2.urlopen(quote_url2)
+    soup = BeautifulSoup(page.read())
+    print soup
+    #print str(soup.findAll("div",{"class":"td-excerpt"})[quote_number].contents[0]).replace('&#039;', '\'')
+    #return str(soup.findAll("div",{"class":"td-excerpt"})[quote_number].contents[0]).replace('&#039;', '\'')
 
 def commit(number_of_commits, day, month):
     repo = gitapi.Repo("../gitCommitGridDrawing")
@@ -134,6 +140,9 @@ def old_date_commit(date, month, day, colour_code, start_quote_num):
 
 def run5():
     old_date_commit(17, 'Sep', 'Sat', 1, 5)
+
+def run6():
+    get_daily_quotation2(0)
 
 
 run()
