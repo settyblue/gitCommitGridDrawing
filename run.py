@@ -21,11 +21,22 @@ def get_daily_quotation(quote_number):
     print str(soup.findAll("div",{"class":"td-excerpt"})[quote_number].contents[0]).replace('&#039;', '\'')
     return str(soup.findAll("div",{"class":"td-excerpt"})[quote_number].contents[0]).replace('&#039;', '\'')
 
-def get_daily_quotation2(quote_number):
-    page = urllib2.urlopen(quote_url2)
+def get_daily_quotation2():
+    #print soup
+    commitplanfile = open(commit_plan_file_name,'rw')
+    page_number = commitplanfile.readlines()[1]
+    quote_number = int(commitplanfile.readlines()[2])
+    page = urllib2.urlopen(quote_url2+'?page='+page_number)
     soup = BeautifulSoup(page.read())
-    print soup
-    #print str(soup.findAll("div",{"class":"td-excerpt"})[quote_number].contents[0]).replace('&#039;', '\'')
+    if quote_number == len(soup.findAll("div",{"class":"quoteText"})):
+        page_number += 1
+        quote_number = 0
+        page = urllib2.urlopen(quote_url2+'?page='+page_number)
+        soup = BeautifulSoup(page.read())
+
+    print str(soup.findAll("div",{"class":"quoteText"})[quote_number].contents[0]).replace('&ldquo;', '\"').replace('&rdquo;', '\"')
+    commitplanfile.seek(6)
+    commitplanfile.write('%05d' % (quote_number+1))
     #return str(soup.findAll("div",{"class":"td-excerpt"})[quote_number].contents[0]).replace('&#039;', '\'')
 
 def commit(number_of_commits, day, month):
@@ -142,7 +153,7 @@ def run5():
     old_date_commit(17, 'Sep', 'Sat', 1, 5)
 
 def run6():
-    get_daily_quotation2(0)
+    get_daily_quotation2()
 
 
 run()
