@@ -39,7 +39,7 @@ def get_daily_quotation2():
         commitplanfile.seek(6)
         commitplanfile.write('%05d' % (page_number))
 
-    #print str(soup.findAll("div",{"class":"quoteText"})[quote_number].contents[0]).replace('&ldquo;', '\"').replace('&rdquo;', '\"')
+    print str(soup.findAll("div",{"class":"quoteText"})[quote_number].contents[0]).replace('&ldquo;', '\"').replace('&rdquo;', '\"')
     commitplanfile.seek(12)
     commitplanfile.write('%05d' % (quote_number+1))
     return str(soup.findAll("div",{"class":"quoteText"})[quote_number].contents[0]).replace('&ldquo;', '\"').replace('&rdquo;', '\"')
