@@ -9,7 +9,7 @@ from BeautifulSoup import BeautifulSoup
 
 commit_plan_file_name = 'date-wise-commit-plan.txt'
 edit_file_name = 'Jaanu.txt'
-pointer_line = 0
+information_line = 0
 commit_colour_code = {0: 0, 1: 1, 2: 3, 3: 5, 4: 7}
 commit_year = '2016'
 quote_url = 'http://www.dailyinspirationalquotes.in/'
@@ -23,21 +23,26 @@ def get_daily_quotation(quote_number):
 
 def get_daily_quotation2():
     #print soup
-    commitplanfile = open(commit_plan_file_name,'rw')
-    page_number = commitplanfile.readlines()[1]
-    quote_number = int(commitplanfile.readlines()[2])
-    page = urllib2.urlopen(quote_url2+'?page='+page_number)
+    commitplanfile = open(commit_plan_file_name,'r+')
+    lines = commitplanfile.readlines()
+    page_number = int(lines[information_line].split()[1])
+    quote_number = int(lines[information_line].split()[2])
+    print page_number," ", quote_number
+    page = urllib2.urlopen(quote_url2+'?page='+str(page_number))
     soup = BeautifulSoup(page.read())
-    if quote_number == len(soup.findAll("div",{"class":"quoteText"})):
+    print len(soup.findAll("div",{"class":"quoteText"}))
+    if quote_number >= len(soup.findAll("div",{"class":"quoteText"})):
         page_number += 1
         quote_number = 0
-        page = urllib2.urlopen(quote_url2+'?page='+page_number)
+        page = urllib2.urlopen(quote_url2+'?page='+str(page_number))
         soup = BeautifulSoup(page.read())
+        commitplanfile.seek(6)
+        commitplanfile.write('%05d' % (page_number))
 
-    print str(soup.findAll("div",{"class":"quoteText"})[quote_number].contents[0]).replace('&ldquo;', '\"').replace('&rdquo;', '\"')
-    commitplanfile.seek(6)
+    #print str(soup.findAll("div",{"class":"quoteText"})[quote_number].contents[0]).replace('&ldquo;', '\"').replace('&rdquo;', '\"')
+    commitplanfile.seek(12)
     commitplanfile.write('%05d' % (quote_number+1))
-    #return str(soup.findAll("div",{"class":"td-excerpt"})[quote_number].contents[0]).replace('&#039;', '\'')
+    return str(soup.findAll("div",{"class":"quoteText"})[quote_number].contents[0]).replace('&ldquo;', '\"').replace('&rdquo;', '\"')
 
 def commit(number_of_commits, day, month):
     repo = gitapi.Repo("../gitCommitGridDrawing")
@@ -49,7 +54,7 @@ def commit(number_of_commits, day, month):
     # Do the commit action
     for i in range(number_of_commits):
         edit_file = open(edit_file_name, 'a')
-        quote_text = get_daily_quotation(i)
+        quote_text = get_daily_quotation2()
         edit_file.write(quote_text)
         edit_file.write("\n\t\t Quote on "+str(day)+"/"+str(month)+"/"+commit_year+"\n\n\n")
         edit_file.close()
@@ -90,7 +95,7 @@ def run():
     datafile = open(commit_plan_file_name, 'r+')
 
     lines = datafile.readlines()
-    line_pointer = int(lines[pointer_line])
+    line_pointer = int(lines[information_line].split()[0])
 
     # Look for the concerned date colour code
     items = lines[line_pointer].split()
@@ -136,7 +141,7 @@ def commit_with_amend(date, month,day,colour_code,start_quote_num=0):
             repo.git_add(filename)
     for i in range(start_quote_num,number_of_commits+start_quote_num):
         edit_file = open(edit_file_name, 'a')
-        quote_text = get_daily_quotation(i)
+        quote_text = get_daily_quotation2()
         edit_file.write(quote_text)
         edit_file.write("\n\t\t Quote on "+str(date)+"/"+str(month)+"/"+commit_year+"\n\n\n")
         edit_file.close()
@@ -150,10 +155,10 @@ def old_date_commit(date, month, day, colour_code, start_quote_num):
 
 
 def run5():
-    old_date_commit(17, 'Sep', 'Sat', 1, 5)
+    old_date_commit(21, 'Sep', 'Wed', 1, 5)
 
 def run6():
     get_daily_quotation2()
 
 
-run()
+run5()
