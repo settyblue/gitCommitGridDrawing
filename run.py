@@ -157,6 +157,7 @@ def old_date_commit(date, month, day, colour_code, start_quote_num):
 def run5():
     old_date_commit(21, 'Sep', 'Wed', 1, 5)
 
+
 def run6():
     get_daily_quotation2()
 
