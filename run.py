@@ -162,4 +162,4 @@ def run6():
     get_daily_quotation2()
 
 
-run5()
+run()
