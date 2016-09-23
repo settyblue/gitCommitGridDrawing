@@ -1,4 +1,4 @@
-00035 00000 00010
+00035 00000 00011
 #date, month, colour code, day
 20 8 1 Sat
 21 8 1 Sun
