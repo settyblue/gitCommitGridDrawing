@@ -1,8 +1,8 @@
 # helloWorld
 
 import datetime
-from subprocess import call
-import os
+#from subprocess import call
+#import os
 import gitapi
 import urllib2
 from BeautifulSoup import BeautifulSoup
